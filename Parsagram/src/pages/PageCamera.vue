@@ -16,9 +16,9 @@
       <q-input v-model="post.caption" label="Caption" class="col col-sm-6" dense />
     </div>
     <div class="row justify-center q-ma-md">
-      <q-input v-model="post.label" label="Location" class="col col-sm-6" dense>
+      <q-input v-bind:loading="locationLoading" v-model="post.location" label="Location" class="col col-sm-6" dense>
         <template v-slot:append>
-          <q-btn round dense flat icon="eva-navigation-2-outline" />
+          <q-btn v-if="!locationLoading && locationSupported" @click="getLocation" round dense flat icon="eva-navigation-2-outline" />
         </template>
       </q-input>
     </div>
@@ -45,7 +45,17 @@ export default {
       },
       imageUpload: [],
       imageCaptured: false,
-      hasCameraSupport: true
+      hasCameraSupport: true,
+      locationLoading: false
+    }
+  },
+  computed: {
+    locationSupported() {
+      if ("geolocation" in navigator) {
+        return true
+      } else {
+        return false
+      }
     }
   },
   methods: {
@@ -114,6 +124,37 @@ export default {
       // write the ArrayBuffer to a blob, and you're done
       var blob = new Blob([ab], {type: mimeString})
       return blob
+    },
+    getLocation() {
+      this.locationLoading = true
+      navigator.geolocation.getCurrentPosition(position => {
+        this.getCityAndCountry(position)
+      }, err => {
+        this.locationError()
+      }, {timeout: 7000})
+    },
+    getCityAndCountry(position) {
+     let apiUrl = `https://geocode.xyz/${ position.coords.latitude },${ position.coords.longitude }?json=1`
+      this.$axios.get(apiUrl).then(result => {
+        this.locationSuccess(result)
+      }).catch(err => {
+        this.locationError()
+      })
+    },
+    locationSuccess(result) {
+      this.post.location = result.data.city
+      if (result.data.country) {
+        this.post.location += `, ${ result.data.country }`
+        
+      }
+      this.locationLoading = false
+    },
+    locationError() {
+      this.$q.dialog({
+        title: 'Error',
+        message: 'Couldn\'t find your location. Please enter it manually.'
+      })
+      this.locationLoading = false
     }
   },
   mounted() {
