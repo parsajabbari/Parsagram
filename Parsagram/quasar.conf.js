@@ -48,7 +48,7 @@ module.exports = function (/* ctx */) {
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
       env: {
-        API: API_LOCAL
+        API: API_PRODUCTION
         // "https://parsagram-backend.herokuapp.com" or "http://localhost:3000"
       },
       vueRouterMode: 'history', // available values: 'hash', 'history'
