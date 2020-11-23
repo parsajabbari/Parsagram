@@ -23,7 +23,7 @@
       </q-input>
     </div>
     <div class="row justify-center q-mt-lg">
-      <q-btn unelevated rounded color="primary" label="Post Image" />
+      <q-btn @click="addPost()" unelevated rounded color="primary" label="Post Image" />
     </div>
     
   </q-page>
@@ -155,6 +155,20 @@ export default {
         message: 'Couldn\'t find your location. Please enter it manually.'
       })
       this.locationLoading = false
+    },
+    addPost() {
+      let formData = new FormData()
+      formData.append('id', this.post.id)
+      formData.append('caption', this.post.caption)
+      formData.append('location', this.post.location)
+      formData.append('date', this.post.date)
+      formData.append("file", this.post.photo, this.post.id + ".png")
+      this.$axios.post(`${process.env.API}/createPost`, formData).then(
+        response => {
+          console.log('response: ', response)
+        }).catch(err => {
+          console.log('err: ', err)
+        })
     }
   },
   mounted() {
