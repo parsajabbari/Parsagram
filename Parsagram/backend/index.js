@@ -55,7 +55,7 @@ app.post('/createPost', (request, response) => {
         id: fields.id,
         caption: fields.caption,
         location: fields.location,
-        date: fields.date,
+        date: parseInt(fields.date),
         imageUrl: "https://firebasestorage.googleapis.com/v0/b/project-parsagram.appspot.com/o/5tUZBEy.jpg?alt=media&token=306b6365-e100-4615-8027-f10e4d577831"
 
       })
