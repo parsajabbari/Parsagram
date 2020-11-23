@@ -1,7 +1,7 @@
 <template>
   <q-page class="constrain-more q-pa-md">
     <div class="camera-frame q-pa-md">
-      <video v-show="!imageCaptured" ref="video" class="full-width" autoplay />
+      <video v-show="!imageCaptured" ref="video" class="full-width" autoplay playsinline />
       <canvas v-show="imageCaptured" ref="canvas" class="full-width" height="240" />
     </div>
     <div class="q-pa-md text-center">
