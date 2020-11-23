@@ -157,6 +157,7 @@ export default {
       this.locationLoading = false
     },
     addPost() {
+      this.$q.loading.show()
       let formData = new FormData()
       formData.append('id', this.post.id)
       formData.append('caption', this.post.caption)
@@ -173,11 +174,13 @@ export default {
           { label: 'Dismiss', color: 'white'}
         ]
       })
+      this.$q.loading.hide()
         }).catch(err => {
           this.$q.dialog({
         title: 'Error',
         message: 'Sorry, we couldn\'t create the post!'
       })
+      this.$q.loading.hide()
         })
     }
   },
