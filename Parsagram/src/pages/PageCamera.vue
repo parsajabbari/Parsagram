@@ -166,8 +166,18 @@ export default {
       this.$axios.post(`${process.env.API}/createPost`, formData).then(
         response => {
           console.log('response: ', response)
+          this.$router.push("/")
+          this.$q.notify({
+        message: 'Post created!',
+        actions: [
+          { label: 'Dismiss', color: 'white'}
+        ]
+      })
         }).catch(err => {
-          console.log('err: ', err)
+          this.$q.dialog({
+        title: 'Error',
+        message: 'Sorry, we couldn\'t create the post!'
+      })
         })
     }
   },
