@@ -5,7 +5,7 @@
       <canvas v-show="imageCaptured" ref="canvas" class="full-width" height="240" />
     </div>
     <div class="q-pa-md text-center">
-      <q-btn v-if="hasCameraSupport" @click="captureImage" round color="grey-10" size="lg" icon="eva-camera" />
+      <q-btn v-if="hasCameraSupport" :disable="imageCaptured" @click="captureImage" round color="grey-10" size="lg" icon="eva-camera" />
       <q-file @input="captureImageFallback" v-else label="Choose an image" outlined v-model="imageUpload" accept="image/*">
         <template v-slot:prepend>
           <q-icon name="eva-attach-outline" />
@@ -13,7 +13,7 @@
       </q-file>
     </div>
     <div class="row justify-center q-ma-md">
-      <q-input v-model="post.caption" label="Caption" class="col col-sm-6" dense />
+      <q-input v-model="post.caption" label="Caption *" class="col col-sm-6" dense />
     </div>
     <div class="row justify-center q-ma-md">
       <q-input v-bind:loading="locationLoading" v-model="post.location" label="Location" class="col col-sm-6" dense>
@@ -23,7 +23,7 @@
       </q-input>
     </div>
     <div class="row justify-center q-mt-lg">
-      <q-btn @click="addPost()" unelevated rounded color="primary" label="Post Image" />
+      <q-btn :disable="!post.caption || !post.photo" @click="addPost()" unelevated rounded color="primary" label="Post Image" />
     </div>
     
   </q-page>
