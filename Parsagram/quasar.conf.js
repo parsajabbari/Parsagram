@@ -117,13 +117,13 @@ module.exports = function (/* ctx */) {
       workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
       manifest: {
-        name: `Parsagram`,
+        name: `Parsagram - Share Your Experiences`,
         short_name: `Parsagram`,
         description: `Like Instagram but made with a $0 budget in one weekend`,
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',
-        theme_color: '#027be3',
+        theme_color: '#212121',
         icons: [
           {
             src: 'icons/icon-128x128.png',
